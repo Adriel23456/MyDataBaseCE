@@ -8,3 +8,4 @@ port = 56789
 
 s.bind(("",port))
 
+print(f"socket binded to port {port}")
