@@ -6,8 +6,11 @@ const fs = require('fs');
 const xml2js = require('xml2js');
 const session = require('express-session');
 const flash = require('connect-flash');
+const path = require('path');
 
 const app = express();
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'public'));
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,7 +41,7 @@ fs.readFile('users.xml', function(err, data) {
 passport.use(new LocalStrategy(
   function(username, password, done) {
     if (!users[username]) {
-      return done(null, false, { message: 'Usuario no encontrado.' });
+      return done(null, false, { message: 'No existe tal usuario' });
     }
     if (users[username].password != password) {
       return done(null, false, { message: 'Contraseña incorrecta.' });
@@ -60,7 +63,7 @@ app.post('/login',
   passport.authenticate('local', { 
     successRedirect: '/access',
     failureRedirect: '/login',
-    failureFlash: 'Usuario o contraseña incorrectos'
+    failureFlash: true
   })
 );
 
@@ -69,6 +72,11 @@ app.post('/register', (req, res) => {
         username: req.body.username,
         password: req.body.password
     };
+
+    if (users[newUser.username]) {
+        req.flash('error', 'Este usuario ya existe');
+        return res.redirect('/register');
+    }
 
     users[newUser.username] = newUser;
 
@@ -87,15 +95,15 @@ app.post('/register', (req, res) => {
 });
 
 app.get('/login', function(req, res) {
-    res.sendFile(__dirname + '/public/login.html');
+  res.render('login', { message: req.flash('error') });
 });
 
 app.get('/register', function(req, res) {
-    res.sendFile(__dirname + '/public/register.html');
+  res.render('register', { message: req.flash('error') });
 });
 
 app.get('/access', function(req, res) {
-    res.sendFile(__dirname + '/public/access.html');
+    res.render('access', { message: req.flash('error') });
 });
 
 app.get('/', function(req, res) {

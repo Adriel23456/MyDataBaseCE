@@ -4,6 +4,9 @@
     <title>Iniciar sesión</title>
 </head>
 <body>
+    <% if (message) { %>
+        <div><%= message %></div>
+    <% } %>
     <h2>Iniciar sesión</h2>
     <form action="/login" method="post">
         <label for="username">Nombre de usuario:</label><br>
@@ -12,6 +15,6 @@
         <input type="password" id="password" name="password" required><br>
         <input type="submit" value="Iniciar sesión">
     </form>
-    <button onclick="location.href='/register'">Ir a Registro</button>
+    <a href="/register">Registrarse</a>
 </body>
 </html>

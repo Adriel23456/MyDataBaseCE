@@ -4,6 +4,9 @@
     <title>Registro</title>
 </head>
 <body>
+    <% if (message) { %>
+        <div><%= message %></div>
+    <% } %>
     <h2>Registro</h2>
     <form action="/register" method="post">
         <label for="username">Nombre de usuario:</label><br>
@@ -12,6 +15,6 @@
         <input type="password" id="password" name="password" required><br>
         <input type="submit" value="Registrarse">
     </form>
-    <button onclick="location.href='/login'">Ir a Iniciar sesión</button>
+    <a href="/login">Iniciar sesión</a>
 </body>
 </html>
