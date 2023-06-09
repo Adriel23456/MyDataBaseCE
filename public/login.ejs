@@ -1,7 +1,22 @@
+<!-- login.ejs -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Iniciar sesión</title>
+    <style>
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <% if (message) { %>
@@ -13,8 +28,8 @@
         <input type="text" id="username" name="username" required><br>
         <label for="password">Contraseña:</label><br>
         <input type="password" id="password" name="password" required><br>
-        <input type="submit" value="Iniciar sesión">
+        <input class="button" type="submit" value="Iniciar sesión">
     </form>
-    <a href="/register">Registrarse</a>
+    <a class="button" href="/register">Cambiar a la Pagina de Registro</a>
 </body>
 </html>
